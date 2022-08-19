@@ -1,0 +1,46 @@
+{{> nav }}
+<div class='container mt-5'>
+    <div class='row'>
+        <div class='col'>
+            <form>
+                <div class='mb-3'>
+                    <label class='form-label'>Nombre del Producto</label>
+                    <input class='form-control' id='nombre' />
+                </div>
+                <div class='mb-3'>
+                    <label class='form-label'>Precio en AR$</label>
+                    <input class='form-control' id='precio' />
+                </div>
+                <div class='mb-3'>
+                    <label class='form-label'>URL de la imagen</label>
+                    <input class='form-control' id='url' />
+                </div>
+                <button type='submit' class='btn btn-primary' onclick='guardarProducto()'>Guardar</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    const guardarProducto = async () => {
+
+    const nombre = document.getElementById('nombre').value
+    const precio = document.getElementById('precio').value
+    const urlImage = document.getElementById('url').value
+    document.getElementById('data').reset()
+
+    try {
+        const data = { nombre, precio, urlImage}
+        const response = await fetch('/api/productos', {
+            method: 'POST', 
+            body: JSON.stringify(data),
+            headers: { 'Content-Type': 'application/json'},
+        })
+        const result = await response.json()
+        return result
+
+    } catch (error) {
+        let err = new Error(error)
+        return err
+    }
+}
+</script>
