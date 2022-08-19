@@ -2,26 +2,7 @@ const { Router } = require('express')
 
 const router = Router()
 
-const productos = [
-    {
-        id: 1,
-        nombre: 'teclado hyperex alloy fps pro',
-        precio: 14250,
-        url: 'https://puntodamia.com.ar/wp-content/uploads/2020/11/23908.jpg',
-    },
-    {
-        id: 2,
-        nombre: 'teclado redragon fizz pro',
-        precio: 7900,
-        url: 'https://redragon.es/content/uploads/2022/04/fizz-gris-1',
-    },
-    {
-        id: 3,
-        nombre: 'teclado redragon dragonborn',
-        precio: 5900,
-        url: 'https://redragon.es/content/uploads/2021/07/Dragonborn-Black-RGB-1.png',
-    },
-]
+const productos = []
 
 let prodID = 1
 
@@ -40,11 +21,11 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
     // POST '/api/productos' -> recibe y agrega un producto, y lo devuelve con su id asignado.
-    const { nombre, precio, urlImage } = req.body
-    if (!nombre || !precio || !urlImage) {
+    const { nombre, precio, urlImagen } = req.body
+    if (!nombre || !precio || !urlImagen) {
         res.status(400).json({ error: 'por favor ingrese todos los datos' })
     } else {
-        const data = { nombre, precio, urlImage }
+        const data = { nombre, precio, urlImagen }
         data.id = prodID
         productos.push(data)
         prodID += 1
@@ -55,8 +36,8 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
     // PUT '/api/productos/:id' -> recibe y actualiza un producto según su id.
     const { id } = req.params
-    const { nombre, precio, urlImage } = req.body
-    if (!nombre || !precio || !urlImage) {
+    const { nombre, precio, urlImagen } = req.body
+    if (!nombre || !precio || !urlImagen) {
         res.status(400).json({ error: 'producto no encontrado' })
     } else {
         let contador = 0
@@ -64,7 +45,7 @@ router.put('/:id', (req, res) => {
             if (productos[i].id == id) {
                 productos[i].nombre = nombre
                 productos[i].precio = precio
-                productos[i].urlImage = urlImage
+                productos[i].urlImagen = urlImagen
                 contador += 1
                 break
             }
